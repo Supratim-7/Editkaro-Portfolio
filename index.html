@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Editkaro.in Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1b1b3a;
+      --accent: #fa6788;
+      --bg: #ffffff;
+      --card-bg: #f2f2f2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      color: var(--primary);
+    }
+    header {
+      background: var(--primary);
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem 1rem 1rem;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 0.2em;
+      font-size: 2.5em;
+      letter-spacing: 2px;
+    }
+    .subtitle {
+      font-size: 1.1em;
+      color: #fa6788;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      justify-content: center;
+      margin: 2em 0 1em 0;
+    }
+    .filter-btn {
+      background: #fff;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 0.5em 1.5em;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s, color 0.2s;
+    }
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+      gap: 2em;
+      padding: 1em 8vw 2em 8vw;
+    }
+    .video-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(27,27,58,0.06);
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .video-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 32px rgba(250,103,136,0.15);
+    }
+    .thumb-wrap {
+      position: relative;
+      cursor: pointer;
+    }
+    .video-thumb {
+      width: 100%;
+      display: block;
+      height: 175px;
+      object-fit: cover;
+      transition: filter 0.25s;
+    }
+    .play-overlay {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      background: rgba(0,0,0,0.55);
+      border-radius: 50%;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .play-overlay svg {
+      width: 42px; height: 42px;
+      fill: #fff;
+    }
+    .video-card .info {
+      padding: 1.2em 1em;
+    }
+    .info h3 {
+      font-size: 1.25em;
+      margin: 0 0 0.4em 0;
+      color: var(--primary);
+    }
+    .info p {
+      margin: 0 0 0.6em 0;
+      font-size: 1em;
+      color: #444;
+    }
+    @media (max-width: 600px) {
+      header { padding: 1em 0.5em; }
+      .portfolio-grid { padding: 1em; }
+      .video-thumb { height: 110px; }
+    }
+    /* Lightbox Styles */
+    #lightbox {
+      display:none;
+      z-index: 1000;
+      position:fixed;
+      left:0; top:0; width:100vw; height:100vh;
+      background: rgba(20,20,20,0.82);
+      align-items: center; justify-content: center;
+    }
+    #lightbox iframe {
+      width: 88vw; height: 51vw;
+      max-width: 720px; max-height: 420px;
+      border: none;
+      border-radius: 14px;
+      box-shadow: 0 2px 24px rgba(250,103,136,0.15);
+      background: #111;
+    }
+    #lightbox .close {
+      position:absolute;
+      right: 2vw; top: 2vw; font-size: 2em;
+      color: #fff; cursor: pointer;
+    }
+    @media (max-width:600px) {
+      #lightbox iframe { width:95vw; height:56vw; }
+      #lightbox .close { right: 6vw; top: 9vw;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Editkaro.in Portfolio</h1>
+    <div class="subtitle">Social Media Marketing & Professional Video Editing</div>
+    <div>Short-form, Long-form, Gaming, Sports, Ads, Documentaries, Anime & More</div>
+  </header>
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="short">Short-Form</button>
+    <button class="filter-btn" data-filter="long">Long-Form</button>
+    <button class="filter-btn" data-filter="gaming">Gaming</button>
+    <button class="filter-btn" data-filter="football">Football</button>
+    <button class="filter-btn" data-filter="ecommerce">eCommerce</button>
+    <button class="filter-btn" data-filter="docu">Documentary</button>
+    <button class="filter-btn" data-filter="color">Color Grading</button>
+    <button class="filter-btn" data-filter="anime">Anime</button>
+    <button class="filter-btn" data-filter="ads">Ads</button>
+  </div>
+
+  <div class="portfolio-grid" id="portfolioGrid">
+    <!-- VIDEO CARDS AUTO GENERATED -->
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox">
+    <div class="close" onclick="closeLightbox()">&#10006;</div>
+    <iframe src="" allowfullscreen></iframe>
+  </div>
+
+  <script>
+  // Portfolio Data
+  const videos = [
+    {
+      title: "Reel Showcase – Social Quick Edits",
+      desc: "Dynamic shorts for Instagram/TikTok with cutting-edge transitions.",
+      thumb: "https://img.youtube.com/vi/5O0YDHiosD0/hqdefault.jpg",
+      yt: "https://www.youtube.com/embed/5O0YDHiosD0",
+      cat: "short"
+    },
+    {
+      title: "YouTube Vlog Editing – Scenic Adventure",
+      desc: "Long-form YouTube vlog with storytelling and smooth edits.",
+      thumb: "https://img.youtube.com/vi/K3iyFsTBsH4/hqdefault.jpg",
+      yt: "https://www.youtube.com/embed/K3iyFsTBsH4",
+      cat: "long"
+    },
+    {
+      title: "PUBG Gaming Montage",
+      desc: "Action-packed highlights with special effects for gamers.",
+      thumb: "https://img.youtube.com/vi/iBU-MxygHfE/hqdefault.jpg",
+      yt: "https://www.youtube.com/embed/iBU-MxygHfE",
+      cat: "gaming"
+    },
+    {
+      title: "Football Edits – Best Goals 2025",
+      desc: "High-energy football montage with slow-motion highlights.",
+      thumb: "https://img.youtube.com/vi/tNJ_qsBp8Po/hqdefault.jpg",
+      yt: "https://www.youtube.com/embed/tNJ_qsBp8Po",
+      cat: "football"
+    },
+    {
+      title: "eCommerce Ad – Product Feature",
+      desc: "Engaging ad for a trending product, created for Instagram & FB.",
+      thumb: "https://img.youtube.com/vi/UDEpzeh6EQA/hqdefault.jpg",
+      yt: "https://www.youtube.com/embed/UDEpzeh6EQA",
+      cat: "ecommerce"
+    },
+    {
+      title: "Mini-Documentary – Startups in India",
+      desc: "Story-driven, informative edit with interviews and b-roll.",
+      thumb: "https://img.youtube.com/vi/0dc2hWlhfY8/hqdefault.jpg",
+      yt: "https://www.youtube.com/embed/0dc2hWlhfY8",
+      cat: "docu"
+    },
+    {
+      title: "Color Grading Demo Reel",
+      desc: "Before/after scenes with rich cinematic color work.",
+      thumb: "https://img.youtube.com/vi/B5eQXiJKOcc/hqdefault.jpg",
+      yt: "https://www.youtube.com/embed/B5eQXiJKOcc",
+      cat: "color"
+    },
+    {
+      title: "Anime Style – Naruto AMV",
+      desc: "Dramatic AMV edit with beat-synced animation clips.",
+      thumb: "https://img.youtube.com/vi/p-1SPiL6MZo/hqdefault.jpg",
+      yt: "https://www.youtube.com/embed/p-1SPiL6MZo",
+      cat: "anime"
+    },
+    {
+      title: "Fashion Brand Promo Ad",
+      desc: "High-conversion video ad with motion graphics for brand awareness.",
+      thumb: "https://img.youtube.com/vi/lwXb6kA2j2Y/hqdefault.jpg",
+      yt: "https://www.youtube.com/embed/lwXb6kA2j2Y",
+      cat: "ads"
+    },
+    // ADD or modify with more videos as needed
+  ];
+
+  function buildPortfolio(filter="all") {
+    const grid = document.getElementById("portfolioGrid");
+    grid.innerHTML = '';
+    videos.filter(v => filter==="all" || v.cat===filter).forEach((v,i) => {
+      grid.innerHTML += `
+        <div class="video-card">
+          <div class="thumb-wrap" onclick="openLightbox('${v.yt}')">
+            <img src="${v.thumb}" alt="${v.title}" class="video-thumb">
+            <div class="play-overlay">
+              <svg viewBox="0 0 60 60"><polygon points="20,15 50,30 20,45" /></svg>
+            </div>
+          </div>
+          <div class="info">
+            <h3>${v.title}</h3>
+            <p>${v.desc}</p>
+            <a href="${v.yt.replace('/embed','/watch?v=')}" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:0.92em;">View on YouTube</a>
+          </div>
+        </div>
+      `;
+    });
+  }
+  buildPortfolio();
+
+  // Filter Buttons
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.onclick = function() {
+      document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+      this.classList.add("active");
+      let filter = this.getAttribute("data-filter");
+      buildPortfolio(filter);
+    }
+  });
+
+  // Lightbox Functions
+  function openLightbox(ytlink) {
+    document.getElementById("lightbox").style.display="flex";
+    document.querySelector("#lightbox iframe").src = ytlink+"?autoplay=1";
+    document.body.style.overflow="hidden";
+  }
+  function closeLightbox() {
+    document.getElementById("lightbox").style.display="none";
+    document.querySelector("#lightbox iframe").src = "";
+    document.body.style.overflow="auto";
+  }
+  window.closeLightbox = closeLightbox;
+  window.openLightbox = openLightbox;
+
+  // ESC to close lightbox
+  window.addEventListener("keydown", e => {if(e.key==="Escape") closeLightbox();});
+  </script>
+</body>
+</html>
